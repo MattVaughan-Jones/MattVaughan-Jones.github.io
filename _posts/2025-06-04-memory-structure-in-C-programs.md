@@ -1,6 +1,6 @@
 ## Memory Structure in C Programs
 
-```
+```plaintext
 Memory Layout:
 ┌─────────────────┐
 │   Stack         │ ←
@@ -40,7 +40,7 @@ Global const and static const variables are allocated when the program starts an
 
 **Examples**
 
-```
+```plaintext
 // The following are stored in the read-only segment
 const int MAX_SIZE = 100;     // Constants declared in the global scope
 static const char* const VERSION = "1.0.0";         // Static constants
@@ -64,7 +64,7 @@ Variables in the data segment persist for the entire lifetime of the program and
 
 **Example**
 
-```
+```plaintext
 // These go in the Data Segment
 int globalCounter = 0;
 static char* globalString = "Hello";
@@ -100,7 +100,7 @@ The classic analogy of a stack of books works to a point. You can put things on 
 
 This is possible because we also have stack pointers and frame pointers. The stack pointer points to the top of the stack and each frame has a frame pointer which usually points to the start of a given frame. When allocating memory, the compiler knows exactly how much space to use for each variable, so an offset from the frame pointer can be used to get any variable from any point the call stack.
 
-```
+```plaintext
                       Stack frames
                       ┌─────────────────┐
                       │ Previous        │
@@ -126,7 +126,7 @@ Now that we understand the uses for each segment, let's relate that to something
 
 Allocating to the stack.
 
-```
+```plaintext
 void myFunction() {
     int x = 10; // 'x' is allocated on the stack
     printf("%d\n", x);
@@ -138,7 +138,7 @@ void myFunction() {
 
 Memory allocated on the heap must be freed before the pointer is popped from the stack, because otherwise we won't have a way to reference the variable on the heap, so it can never be accessed or freed.
 
-```
+```plaintext
 int* createAndReturnInteger() {
     // 'ptr' is a local pointer containing a memory address on the heap, stored on the stack
     int* ptr = (int*) malloc(sizeof(int));
@@ -184,7 +184,7 @@ Other kinds of illegal operations will also cause a segfault:
 
 **Examples for accessing an invalid memory address**
 
-```
+```plaintext
 // Null pointer dereference
 int* ptr = NULL;
 *ptr = 42;  // Segfault - accessing address 0
@@ -203,7 +203,7 @@ free(ptr);
 
 If the stack and/or heap grow to a point where they are contiguous, the error depends on which one attempts to write next. If it's the stack, we'll get a stack overflow; if it's the heap, it will simply fail to allocate memory. The heap allocator first checks if space is available and returns `NULL` if not, and does not cause a crash. This is why it's important to verify successful memory allocation and handle this scenario, like so:
 
-```
+```plaintext
 #include <stdio.h>
 #include <stdlib.h>
 
